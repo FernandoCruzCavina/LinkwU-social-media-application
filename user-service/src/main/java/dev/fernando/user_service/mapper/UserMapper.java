@@ -10,7 +10,8 @@ import dev.fernando.user_service.model.User;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    User toEntity(CreateUserDto createUserDto);
+    User toEntity(CreateUserDto userRequest);
     User toEntity(UpdateUserDto updateUserDto);
+    User toEntity(String userJson);
     ViewUserDto toDto(User user);
 }

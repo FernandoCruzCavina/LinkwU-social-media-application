@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.fernando.user_service.constant.UserRole;
 import dev.fernando.user_service.dto.CreateUserDto;
 import dev.fernando.user_service.dto.UpdateUserDto;
 import dev.fernando.user_service.dto.ViewUserDto;
@@ -47,7 +48,7 @@ class UserServiceTest {
                 "test@example.com",
                 "password",
                 System.currentTimeMillis(),
-                "USER",
+                UserRole.USER,
                 true
         );
 
@@ -63,7 +64,7 @@ class UserServiceTest {
                 "updateduser",
                 "updated@example.com",
                 "newpassword",
-                "ADMIN",
+                UserRole.ADMIN,
                 false
         );
     }

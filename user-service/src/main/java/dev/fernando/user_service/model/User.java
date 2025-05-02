@@ -2,15 +2,18 @@ package dev.fernando.user_service.model;
 
 import java.util.UUID;
 
+import dev.fernando.user_service.constant.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class User {
 
     private UUID id;
@@ -18,6 +21,6 @@ public class User {
     private String email;
     private String password;
     private long createdAt;
-    private String role;
+    private UserRole role;
     private boolean isActive;
 }
