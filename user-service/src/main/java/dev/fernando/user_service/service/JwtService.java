@@ -1,58 +1,53 @@
 package dev.fernando.user_service.service;
 
-import java.util.Date;
+import java.time.Instant;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-
-import dev.fernando.user_service.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class JwtService {
 
-    @Value("${jwt.secret}")
-    private String secret;
+    private JwtEncoder jwtEncoder;
+    private JwtDecoder jwtDecoder;
 
-    @Value("${jwt.expiration.refresh}")
-    private long expirationTimeRefreshToken;
-
-    public String generateToken(User user, long expirationTime) {
-        String userJson = user.toString();
-
-        return JWT.create()
-            .withSubject(userJson)
-            .withIssuedAt(new Date())
-            .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
-            .withIssuer("api-user-linkwU")
-            .sign(Algorithm.HMAC256(secret.getBytes()));
+    public JwtService(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder) {
+        this.jwtEncoder = jwtEncoder;
+        this.jwtDecoder = jwtDecoder;
     }
 
-    public String verifyToken(String token) {
-        return JWT.require(Algorithm.HMAC256(secret.getBytes()))
-            .withIssuer("api-user-linkwU")
-            .build()
-            .verify(token)
-            .getSubject();
-    }
+    public String generateToken(Authentication authentication, long expirationTime) {
+        String scopes = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(" "));
 
-    public boolean isTokenExpired(String token) {
-        return JWT.require(Algorithm.HMAC256(secret.getBytes()))
-            .withIssuer("api-user-linkwU")
-            .build()
-            .verify(token)
-            .getExpiresAt()
-            .before(new Date());
+        
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("user-service-linkwU")
+                .issuedAt(Instant.now())
+                .expiresAt(Instant.now().plusSeconds(expirationTime))
+                .subject(authentication.getName())
+                .claim("roles", scopes)
+                .build();
+        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();   
     }
 
     public String recoverToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
-        if(authHeader == null){
-            return null;
-        }
-        return authHeader.replace("Bearer ", "");
+        return authHeader.replace("Bearer", "");
     }
+
+    public String verifyToken(String token) {
+        return jwtDecoder.decode(token).getSubject();
+    }
+
 }

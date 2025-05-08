@@ -6,8 +6,12 @@ target/
 
 ### VS Code ###
 .vscode/
-src/main/resources/application.properties
+*.properties
+*.pub
+*.key
 
+###test###
+src/main/java/dev/fernando/user_service/config/AuthenticatedUserFilter.java
 ### STS ###
 .apt_generated
 .classpath
@@ -32,4 +36,3 @@ src/main/resources/application.properties
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-

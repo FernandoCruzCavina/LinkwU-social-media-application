@@ -2,12 +2,11 @@ package dev.fernando.user_service.service;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.fernando.user_service.dto.AuthenticationToken;
 import dev.fernando.user_service.dto.CreateUserDto;
-import dev.fernando.user_service.dto.LoginUser;
 import dev.fernando.user_service.dto.UpdateUserDto;
 import dev.fernando.user_service.dto.ViewUserDto;
 import dev.fernando.user_service.exception.UserAlreadyExistsException;
@@ -21,42 +20,14 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, JwtService jwtService, PasswordEncoder passwordEncoder) {
+    @Autowired
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-        this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
     }
-
-    public AuthenticationToken login(LoginUser loginUser){
-        User user = userRepository.findByEmail(loginUser.email())
-                .orElseThrow(() -> new UserNotFoundException(loginUser.email()));
-
-        if (!passwordEncoder.matches(loginUser.password(), user.getPassword())) {
-            throw new IllegalArgumentException("Invalid password");
-        }
-
-        String token = jwtService.generateToken(user, 54000);
-        String refreshToken = jwtService.generateToken(user, 216000);
-
-        return new AuthenticationToken(token, refreshToken);
-    }
-
-    public String refreshToken(String token) {
-        if (jwtService.isTokenExpired(token)) {
-            throw new IllegalArgumentException("Refresh token is not valid");
-        }
-
-        String userJson = jwtService.verifyToken(token);
-        User userFromToken = userMapper.toEntity(userJson);
-        User user = userRepository.findById(userFromToken.getId())
-                .orElseThrow(() -> new UserNotFoundException(userFromToken.getId()));
-
-        return jwtService.generateToken(user, 54000);
-}
 
     public ViewUserDto createUser(CreateUserDto userRequest) {
         if (userRepository.findByEmail(userRequest.email()).isPresent()) {

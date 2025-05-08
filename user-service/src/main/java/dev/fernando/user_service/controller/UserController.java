@@ -4,11 +4,16 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import dev.fernando.user_service.dto.AuthenticationToken;
 import dev.fernando.user_service.dto.CreateUserDto;
-import dev.fernando.user_service.dto.LoginUser;
 import dev.fernando.user_service.dto.UpdateUserDto;
 import dev.fernando.user_service.dto.ViewUserDto;
 import dev.fernando.user_service.service.UserService;
@@ -23,21 +28,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthenticationToken> login(@RequestBody LoginUser loginUser) {
-        AuthenticationToken token = userService.login(loginUser);
-
-        return ResponseEntity.status(HttpStatus.OK).body(token);
-    }
-
-    @PostMapping("/refresh")
-    public ResponseEntity<String> refreshToken(@RequestBody String refreshToken) {
-        String newToken = userService.refreshToken(refreshToken);
-
-        return ResponseEntity.status(HttpStatus.OK).body(newToken);
-    }
-
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ViewUserDto> createUser(@RequestBody CreateUserDto userRequest) {
         ViewUserDto userDto = userService.createUser(userRequest);
 

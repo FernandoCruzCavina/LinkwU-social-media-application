@@ -1,6 +1,6 @@
 package dev.fernando.user_service.dto;
 
-public record LoginUser(
+public record LoginUserDto(
     String email,
     String password
 ) {}
