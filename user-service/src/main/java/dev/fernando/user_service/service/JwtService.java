@@ -1,6 +1,7 @@
 package dev.fernando.user_service.service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -26,11 +27,9 @@ public class JwtService {
     }
 
     public String generateToken(Authentication authentication, long expirationTime) {
-        String scopes = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
+        List<String> scopes = authentication.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority).toList();
 
-        
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("user-service-linkwU")
                 .issuedAt(Instant.now())
@@ -43,6 +42,7 @@ public class JwtService {
 
     public String recoverToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
+        if (authHeader == null) return null;        
         return authHeader.replace("Bearer", "");
     }
 

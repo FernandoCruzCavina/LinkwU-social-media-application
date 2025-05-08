@@ -1,1 +1,13 @@
 spring.application.name=user-service
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/schema
+spring.datasource.username= username
+spring.datasource.password= password
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+
+jwt.public.key=classpath:file.key
+jwt.private.key=classpath:file.key
+jwt.expiration=54000
+jwt.refresh.expiration=216000

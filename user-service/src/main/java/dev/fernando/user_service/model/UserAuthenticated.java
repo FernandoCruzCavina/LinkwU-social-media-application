@@ -1,10 +1,14 @@
 package dev.fernando.user_service.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import dev.fernando.user_service.constant.UserRole;
 
 public class UserAuthenticated implements UserDetails, CredentialsContainer {
     
@@ -16,7 +20,7 @@ public class UserAuthenticated implements UserDetails, CredentialsContainer {
     
         @Override
         public String getUsername() {
-            return user.getUsername();
+            return user.getEmail();
         }
     
         @Override
@@ -51,7 +55,7 @@ public class UserAuthenticated implements UserDetails, CredentialsContainer {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+            return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
         }
 
 }
