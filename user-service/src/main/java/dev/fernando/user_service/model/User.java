@@ -1,11 +1,6 @@
 package dev.fernando.user_service.model;
 
-import java.util.Collection;
 import java.util.UUID;
-
-import org.springframework.security.core.CredentialsContainer;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import dev.fernando.user_service.constant.UserRole;
 import jakarta.persistence.Entity;

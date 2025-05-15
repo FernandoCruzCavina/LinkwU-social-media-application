@@ -1,4 +1,4 @@
-package dev.fernando.user_service.config;
+package dev.fernando.auth_service.config;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;

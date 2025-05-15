@@ -1,9 +1,7 @@
-package dev.fernando.user_service.service;
+package dev.fernando.auth_service.service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

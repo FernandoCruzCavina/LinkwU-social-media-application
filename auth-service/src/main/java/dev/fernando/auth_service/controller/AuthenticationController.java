@@ -1,4 +1,4 @@
-package dev.fernando.user_service.controller;
+package dev.fernando.auth_service.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.fernando.user_service.dto.AuthenticationToken;
-import dev.fernando.user_service.dto.LoginUserDto;
-import dev.fernando.user_service.service.AuthenticationService;
+import dev.fernando.auth_service.dto.AuthenticationToken;
+import dev.fernando.auth_service.dto.LoginUserDto;
+import dev.fernando.auth_service.service.AuthenticationService;
 
 @RestController
 @RequestMapping("/auth")

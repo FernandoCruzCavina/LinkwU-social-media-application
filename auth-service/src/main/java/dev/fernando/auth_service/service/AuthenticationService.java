@@ -1,4 +1,4 @@
-package dev.fernando.user_service.service;
+package dev.fernando.auth_service.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,9 +7,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.fernando.user_service.dto.AuthenticationToken;
-import dev.fernando.user_service.dto.LoginUserDto;
-import dev.fernando.user_service.repository.UserRepository;
+import dev.fernando.auth_service.dto.AuthenticationToken;
+import dev.fernando.auth_service.dto.LoginUserDto;
+import dev.fernando.auth_service.repository.UserRepository;
 
 @Service
 public class AuthenticationService {

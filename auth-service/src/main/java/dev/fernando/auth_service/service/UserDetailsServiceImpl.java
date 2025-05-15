@@ -1,12 +1,12 @@
-package dev.fernando.user_service.service;
+package dev.fernando.auth_service.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import dev.fernando.user_service.model.UserAuthenticated;
-import dev.fernando.user_service.repository.UserRepository;
+import dev.fernando.auth_service.model.UserAuthenticated;
+import dev.fernando.auth_service.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

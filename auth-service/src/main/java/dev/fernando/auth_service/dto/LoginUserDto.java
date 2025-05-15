@@ -1,4 +1,4 @@
-package dev.fernando.user_service.dto;
+package dev.fernando.auth_service.dto;
 
 public record LoginUserDto(
     String email,

@@ -1,4 +1,4 @@
-package dev.fernando.user_service.config;
+package dev.fernando.auth_service.config;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
