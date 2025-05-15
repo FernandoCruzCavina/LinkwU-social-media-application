@@ -31,5 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-src/main/java/dev/fernando/gateway/config/SecurityConfig.java
