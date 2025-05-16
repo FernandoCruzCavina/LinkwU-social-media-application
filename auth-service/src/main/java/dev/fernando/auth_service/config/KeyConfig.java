@@ -35,6 +35,4 @@ public class KeyConfig {
         var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
     }
-
-
 }
